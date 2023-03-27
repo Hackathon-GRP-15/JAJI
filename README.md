@@ -1,1 +1,1 @@
-# JAJI
+# HACKATHON - JAJI
