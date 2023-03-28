@@ -1,0 +1,36 @@
+nav:
+  logout: 'Déconnexion'
+  about: 'À propos'
+  contact: 'Contact'
+  profile: 'Profil'
+  home: 'Accueil'
+form:
+  message:
+    password: 'Votre mot de passe doit comporter au moins 8 caractères et contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial'
+  title:
+    register: 'S''inscrire'
+    edit: 'Modifier votre profil'
+  btn:
+    register: 'Créer mon compte'
+    edit: 'Modifier mon compte'
+  label:
+    email: 'Email :'
+    username: 'Pseudo :'
+    firstname: 'Prénom :'
+    lastname: 'Nom :'
+    password: 'Mot de passe :'
+    cpassword: 'Confirmation du mot de passe :'
+  help:
+    email: 'Saisissez un email'
+    username: 'Saisissez un pseudo'
+    firstname: 'Saisissez un prénom'
+    lastname: 'Saisissez un nom'
+    password: 'Saisissez un mot de passe'
+    cpassword: 'Resaisissez le mot de passe'
+  link:
+    already_account: 'Déjà un compte ?'
+  success: 'Votre compte a été créé avec succès, vous avez besoin d''activer votre compte grâce à l''email que nous venons de vous envoyer!'
+navbar:
+  home: 'Accueil'
+  logout: 'Déconnexion'
+  user: 'Gestion des utilisateurs'
