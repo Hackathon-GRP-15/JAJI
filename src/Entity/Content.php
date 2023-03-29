@@ -28,9 +28,17 @@ class Content
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'content')]
     private Collection $tags;
 
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: Media::class)]
+    private Collection $media;
+
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: ContentText::class)]
+    private Collection $contentTexts;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->media = new ArrayCollection();
+        $this->contentTexts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +104,66 @@ class Content
     {
         if ($this->tags->removeElement($tag)) {
             $tag->removeContent($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media->add($medium);
+            $medium->setContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getContent() === $this) {
+                $medium->setContent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContentText>
+     */
+    public function getContentTexts(): Collection
+    {
+        return $this->contentTexts;
+    }
+
+    public function addContentText(ContentText $contentText): self
+    {
+        if (!$this->contentTexts->contains($contentText)) {
+            $this->contentTexts->add($contentText);
+            $contentText->setContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContentText(ContentText $contentText): self
+    {
+        if ($this->contentTexts->removeElement($contentText)) {
+            // set the owning side to null (unless already changed)
+            if ($contentText->getContent() === $this) {
+                $contentText->setContent(null);
+            }
         }
 
         return $this;
