@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ContentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use App\Repository\ContentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ContentRepository::class)]
 class Content
@@ -33,6 +34,10 @@ class Content
 
     #[ORM\OneToMany(mappedBy: 'content', targetEntity: ContentText::class)]
     private Collection $contentTexts;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Slug(fields: ['name'])]
+    private ?string $slug = null;
 
     public function __construct()
     {
@@ -165,6 +170,18 @@ class Content
                 $contentText->setContent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

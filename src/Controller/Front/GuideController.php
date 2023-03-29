@@ -2,10 +2,11 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Content;
 use App\Repository\ContentRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/guide', name: 'guide_')]
 class GuideController extends AbstractController
@@ -13,7 +14,7 @@ class GuideController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(): Response
     {
-        return $this->render('guide/index.html.twig', [
+        return $this->render('front/guide/index.html.twig', [
             'controller_name' => 'GuideController',
         ]);
     }
@@ -30,9 +31,18 @@ class GuideController extends AbstractController
 
         $contents = $query->getResult();
 
-        return $this->render('guide/list.html.twig', [
+        return $this->render('front/guide/list.html.twig', [
             'controller_name' => 'GuideController',
             'contents' => $contents,
+        ]);
+    }
+
+    #[Route('/{slug}', name: 'show')]
+    public function show(Content $content): Response
+    {
+        return $this->render('guide/show.html.twig', [
+            'controller_name' => 'GuideController',
+            'content' => $content,
         ]);
     }
 }
