@@ -30,12 +30,6 @@ class Media
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Content $content = null;
-
-    public function __construct()
-    {
-        $this->content = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;

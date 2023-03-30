@@ -1,0 +1,10 @@
+<h1>Etape 3</h1>
+<h2>Pratique d'un sport</h2>
+
+<h3>Pratiquez-vous une activité sportive régulière ?</h3>
+
+{{ form_start(form) }}
+    {{ form_widget(form.sport) }}
+    {{ form_rest(form) }}
+    <button type="submit" name="next" value="step4">Suivant</button>
+{{ form_end(form) }}

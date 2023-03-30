@@ -7,6 +7,7 @@ use App\Entity\Content;
 use App\Entity\ContentType;
 use Doctrine\Persistence\ObjectManager;
 use App\DataFixtures\ContentTypeFixtures;
+use App\Entity\Media;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 

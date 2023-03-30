@@ -1,0 +1,25 @@
+<h1>Etape 2</h2>
+<h2>Votre temps d'écran par jour</h2>
+
+<h3>Sélectionnez votre temps d'écran par jour</h3>
+
+{{ form_start(form) }}
+    {{ form_widget(form.screenTime) }}
+    <span id="range-value">{{ form.screenTime.vars.value }}</span>
+    {{ form_rest(form) }}
+    <button type="submit" name="next" value="step3">Suivant</button>
+{{ form_end(form) }}
+
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var rangeInput = document.querySelector('input[type="range"]');
+    var rangeValue = document.querySelector('#range-value');
+
+    rangeInput.addEventListener('input', function() {
+        var value = rangeInput.value;
+        rangeValue.textContent = value;
+    });
+    });
+</script>
+{% endblock %}
