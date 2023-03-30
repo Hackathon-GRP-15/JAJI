@@ -25,7 +25,6 @@ class ContentText
 
     public function __construct()
     {
-        $this->content = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -1,0 +1,141 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Creation de contenus{% endblock %}
+
+{% block body %}
+    <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+        <span class="sr-only">Open sidebar</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+        </svg>
+    </button>
+
+    <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
+            <h2>Editer les champs</h2>
+
+            <ul class="space-y-2 font-medium">
+                <li>
+                    <label for="content_form_name" class="required">Titre de l'article: </label>
+                    <input type="text" id="sidebar_form_name" name="content_form[name]" required="required" class="" >
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage()">
+                        <img id="preview_sidebar_img" src="{{ asset('img/default.jpg')}}" alt="">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <div class="flex flex-col items-center">
+        <h2>Creation de contenus</h2>
+        <button class="text-5xl" onclick="showSection()">+</button>
+        <div id="section" class="p-5 hidden border-2 border-black flex gap-5">
+            <button>image</button>
+            <button>video</button>
+        </div>
+    </div>
+
+    <div id="form">
+        {{ form_start(form, {'attr': {'class': 'flex flex-col items-center	'}}) }}
+        {{ form_row(form._token) }}
+        {{ form_errors(form) }}
+
+        <div id="section-header">
+            <div class="mb-2">
+                {{ form_label(form.name) }}
+                {{ form_widget(form.name,  {'attr': {'class': 'border- border-black'}}) }}
+            </div>
+            <div class="mb-2">
+                <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage()">
+                    <img id="preview_img" src="{{ asset('img/default.jpg')}}" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="w-3/6">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+
+        <!-- Main modal -->
+        <div id="imgHeader" tabindex="-1" aria-hidden="true" class="fixed  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden p-4 overflow-x-hidden overflow-y-auto">
+            <div class="relative w-full h-full max-w-2xl md:h-auto">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow ">
+                    <!-- Modal header -->
+                    <div class="flex items-start justify-between p-4 border-b rounded-t">
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            Choisir une image pour la section Header
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="imgHeader" onclick="hideModal()">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-6 space-y-6">
+                        {{ form_label(form.file_header) }}
+                        {{ form_widget(form.file_header) }}
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                        <button data-modal-hide="imgHeader" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="changeImgHeader()">Validez</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+    </div>
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputForm = document.querySelector('#content_form_name');
+            const inputSidebar = document.querySelector('#sidebar_form_name');
+            inputForm.addEventListener('change', (event) => {
+                const inputValue = inputForm.value;
+                inputSidebar.value = inputValue;
+            });
+            inputSidebar.addEventListener('change', (event) => {
+                const inputValue = inputSidebar.value;
+                inputForm.value = inputValue;
+            });
+        });
+
+        function downloadImage(){
+            document.getElementById('imgHeader').classList.toggle("hidden");
+        }
+        function hideModal(){
+            document.getElementById('imgHeader').classList.add("hidden");
+        }
+        function showSection(){
+            document.getElementById('section').classList.toggle("hidden");
+        }
+        function changeImgHeader() {
+            // Get the file input element
+            const fileInput = document.getElementById('content_form_file_header');
+
+            const imgForm = document.getElementById('preview_img');
+            const imgsidebar = document.getElementById('preview_sidebar_img');
+
+            // Check if a file is selected
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                // Set the image src attribute with the file data
+                reader.onload = function(e) {
+                    imgForm.setAttribute('src', e.target.result);
+                    imgsidebar.setAttribute('src', e.target.result);
+                }
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+            hideModal()
+        }
+    </script>
+{% endblock %}
