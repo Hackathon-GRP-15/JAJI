@@ -5,10 +5,12 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,37 +19,38 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-           ->add('email', TextType::class, [
-               'label' => 'form.label.email',
-               'help' => 'form.help.email',
-               'attr' => [
-                   'class' => 'form-control',
-               ],
-               'mapped' => true,
-               'required' => true,
-           ])
-            ->add('username', TextType::class,[
-                'label' => 'form.label.username',
+            ->add('email', TextType::class, [
+                'label' => 'Email',
+                'help' => 'form.help.email',
+                'attr' => [
+                    'class' => 'appearance-none rounded-md border border-gray-300 px-4 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none gap: 3 focus:ring-indigo-500 sm:text-sm',
+                ],
+                'mapped' => true,
+                'required' => true,
+            ])
+            ->add('username', TextType::class, [
+                'label' => 'Pseudo',
                 'help' => 'form.help.username',
                 'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'appearance-none rounded-md rounded-t-md border  border-gray-300 px-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
+
                 ],
 
                 'mapped' => true,
                 'required' => true,
             ])
-            ->add('password', RepeatedType::class,[
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options'  => [
-                    'label' => 'form.label.password',
+                    'label' => 'Mot de passe',
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'appearance-none rounded-md border border-gray-300 px-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                     ],
                 ],
                 'second_options' => [
-                    'label' => 'form.label.cpassword',
+                    'label' => 'Confirmation du mot de passe',
                     'attr' => [
-                        'class' => 'form-control',
+                        'class' => 'appearance-none rounded-md rounded-md border border-gray-300 px-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm',
                     ],
                 ],
                 'help' => 'form.help.password',
@@ -65,8 +68,20 @@ class RegisterType extends AbstractType
                         },
                     ]),
                 ],
-            ])
-            ;
+
+
+            ])->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'attr' => [
+                    'class' => 'h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500',
+                ],
+                'constraints' => [
+                    new IsTrue([
+                        'message' => 'Vous devriez accepter notre politique de confidentialité.',
+                    ]),
+                ],
+                'label' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
