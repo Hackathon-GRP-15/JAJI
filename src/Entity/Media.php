@@ -30,6 +30,11 @@ class Media
 
     #[ORM\ManyToOne(inversedBy: 'media')]
     private ?Content $content = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $position = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -97,6 +102,18 @@ class Media
     public function setFile($file): self
     {
         return $this->file = $file;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
+
+        return $this;
     }
 
 }

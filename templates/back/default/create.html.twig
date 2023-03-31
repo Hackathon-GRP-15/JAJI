@@ -23,6 +23,10 @@
                     <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage()">
                         <img id="preview_sidebar_img" src="{{ asset('img/default.jpg')}}" alt="">
                     </a>
+                <li>
+                    <h2>Structure</h2>
+                    <div id="struct" class="flex flex-col">
+                    </div>
                 </li>
             </ul>
         </div>
@@ -30,9 +34,9 @@
     <div class="flex flex-col items-center">
         <h2>Creation de contenus</h2>
         <button class="text-5xl" onclick="showSection()">+</button>
-        <div id="section" class="p-5 hidden border-2 border-black flex gap-5">
-            <button>image</button>
-            <button>video</button>
+        <div id="section" class="flex p-5 hidden border-2 border-black flex gap-5">
+            <button data-section="image" onclick="addSection(this)">image</button>
+            <button data-section="video" onclick="addSection(this)">video</button>
         </div>
     </div>
 
@@ -40,19 +44,22 @@
         {{ form_start(form, {'attr': {'class': 'flex flex-col items-center	'}}) }}
         {{ form_row(form._token) }}
         {{ form_errors(form) }}
-
-        <div id="section-header">
+        <div class="mb-2 select-wrapper">
+            {{ form_label(form.selectTag) }}
+            {{ form_widget(form.selectTag) }}
+        </div>
+        <div id="section-1" data-pos="1">
             <div class="mb-2">
                 {{ form_label(form.name) }}
                 {{ form_widget(form.name,  {'attr': {'class': 'border- border-black'}}) }}
             </div>
             <div class="mb-2">
-                <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage()">
+                <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage('imgHeader')">
                     <img id="preview_img" src="{{ asset('img/default.jpg')}}" alt="">
                 </a>
             </div>
         </div>
-        <div class="w-3/6">
+        <div id="section-2" data-pos="2" class="w-3/6">
             {{ form_label(form.description) }}
             {{ form_widget(form.description) }}
         </div>
@@ -84,12 +91,11 @@
                 </div>
             </div>
         </div>
+        <button id="sendButton" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+            Validez
+        </button>
         {{ form_end(form, {'render_rest': false}) }}
     </div>
-
-
-
-
 {% endblock %}
 
 {% block javascripts %}
@@ -98,23 +104,134 @@
             const inputForm = document.querySelector('#content_form_name');
             const inputSidebar = document.querySelector('#sidebar_form_name');
             inputForm.addEventListener('change', (event) => {
-                const inputValue = inputForm.value;
+                let inputValue = inputForm.value;
                 inputSidebar.value = inputValue;
             });
             inputSidebar.addEventListener('change', (event) => {
-                const inputValue = inputSidebar.value;
+                let inputValue = inputSidebar.value;
                 inputForm.value = inputValue;
             });
         });
 
-        function downloadImage(){
-            document.getElementById('imgHeader').classList.toggle("hidden");
+        window.onload = function() {
+            const form = document.querySelector('form[name="content_form"]')
+            const elements = form.querySelectorAll('[data-pos]');
+            const structureDiv = document.querySelector('#struct');
+
+            elements.forEach((element) => {
+                const button = document.createElement('button');
+                const pos = element.getAttribute('data-pos');
+                button.innerText = `section ${pos}`;
+                button.setAttribute('data-pos', pos);
+                button.setAttribute('draggable', 'true');
+                button.classList.add('bg-transparent');
+                button.classList.add('text-blue-700');
+                button.classList.add('font-semibold');
+                button.classList.add('py-2');
+                button.classList.add('px-4');
+                button.classList.add('border');
+                button.classList.add('border-blue-500');
+                button.classList.add('rounded');
+                button.addEventListener('dragstart', handleDragStart);
+                structureDiv.appendChild(button);
+            });
+
+            function handleDragStart(event) {
+                const button = event.target;
+                const pos = button.getAttribute('data-pos');
+                event.dataTransfer.setData('text/plain', pos);
+            }
+
+            structureDiv.addEventListener('dragover', handleDragOver);
+            structureDiv.addEventListener('drop', handleDrop);
+
+            function handleDragOver(event) {
+                event.preventDefault();
+            }
+            function handleDrop(event) {
+                const pos = event.dataTransfer.getData('text/plain');
+                const targetButton = event.target.closest('button');
+                if (targetButton && targetButton.getAttribute('data-pos') !== pos) {
+                    const sourceButton = structureDiv.querySelector(`button[data-pos="${pos}"]`);
+                    const targetPos = targetButton.getAttribute('data-pos');
+                    sourceButton.setAttribute('data-pos', targetPos);
+                    sourceButton.innerText = `section ${targetPos}`;
+                    targetButton.setAttribute('data-pos', pos);
+                    targetButton.innerText = `section ${pos}`;
+
+                    updateSectionContent(pos, targetPos);
+
+                }
+            }
+
+        }
+        function updateSectionContent(pos, targetPos) {
+            // Get the content of the sections with the given positions
+            const section = document.querySelector(`#section-${pos}`);
+            const targetSection = document.querySelector(`#section-${targetPos}`);
+            const sectionContent = section.innerHTML;
+            const targetSectionContent = targetSection.innerHTML;
+
+            // Update the positions of the sections in the HTML
+            section.setAttribute('data-pos', targetPos);
+            targetSection.setAttribute('data-pos', pos);
+
+            // Swap the content of the sections
+            section.innerHTML = targetSectionContent;
+            targetSection.innerHTML = sectionContent;
+        }
+
+        function downloadImage(idmodal){
+            document.getElementById(idmodal).classList.toggle("hidden");
         }
         function hideModal(){
             document.getElementById('imgHeader').classList.add("hidden");
         }
         function showSection(){
             document.getElementById('section').classList.toggle("hidden");
+        }
+        function addSection(button){
+            let sectionType = button.getAttribute('data-section');
+            if (sectionType === 'image'){
+                let html = `
+      <div class="mb-2">
+        <a href="javascript:void(0)" class="block max-w-sm rounded-lg bg-white shadow-lg" onclick="downloadImage('img1')">
+          <img id="preview_img" src="{{ asset('img/default.jpg')}}" alt="">
+        </a>
+      </div>
+    `;
+                let modal = `
+                <div id="imgHeader" tabindex="-1" aria-hidden="true" class="fixed  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 hidden p-4 overflow-x-hidden overflow-y-auto">
+                    <div class="relative w-full h-full max-w-2xl md:h-auto">
+                        <!-- Modal content -->
+                        <div class="relative bg-white rounded-lg shadow ">
+                            <!-- Modal header -->
+                            <div class="flex items-start justify-between p-4 border-b rounded-t">
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Choisir une image pour la section Header
+                                </h3>
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="imgHeader" onclick="hideModal()">
+                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="p-6 space-y-6">
+                               toto
+                            </div>
+                            <!-- Modal footer -->
+                            <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                                <button data-modal-hide="imgHeader" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="changeImgHeader()">Validez</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id="sendButton" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">
+                    Validez
+                </button>`;
+                let sendButton = document.getElementById('sendButton');
+                sendButton.insertAdjacentHTML('beforebegin', html);
+            }
         }
         function changeImgHeader() {
             // Get the file input element

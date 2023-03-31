@@ -41,10 +41,16 @@ class ContentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid() && $request->isMethod('post')){
             $file = $form->get('file_header')->getData();
             $filename =  '/uploads/media/' . substr(md5(uniqid()), 0, 8).'.'.$file->guessExtension();
+            $file->move(
+                'uploads/media/',
+                $filename
+            );
+
             $contentType =  $this->contentTypeRepository->find(1);
             $dscp = $content->getDescription();
             $content->setDescription(substr($dscp, 0, 50));
             $content->setContentType($contentType);
+            $content->addTag($form->get('selectTag')->getData());
             $this->em->persist($content);
             $contentText = (new ContentText())
                 ->setContent($content)
@@ -53,7 +59,7 @@ class ContentController extends AbstractController
 
             $media = (new Media())
                 ->setContent($content)
-                ->setSlug(strtolower(basename($file, $file->guessExtension())))
+                //->setSlug(strtolower(basename($file, $file->guessExtension())))
                 ->setType('img')
                 ->setFilename($filename);
             $this->em->persist($media);

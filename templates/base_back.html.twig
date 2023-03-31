@@ -9,11 +9,12 @@
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         {% endblock %}
 
         {% block javascripts %}
-            <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
             {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('bundles/fosckeditor/ckeditor.js') }}"></script>
         {% endblock %}
     </head>
     <body>

@@ -4,9 +4,13 @@ namespace App\Form;
 
 use App\Entity\Content;
 use App\Entity\Media;
+use App\Entity\Tag;
+use Doctrine\ORM\EntityRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +22,19 @@ class ContentFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('selectTag', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'label' => 'Choisisez un ou pliseur Tags affiliés au contenu',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'mapped' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.name', 'ASC');
+                },
+            ])
            ->add('name', TextType::class, [
                'label' => 'Titre de l\'article: ',
                'help' => '',

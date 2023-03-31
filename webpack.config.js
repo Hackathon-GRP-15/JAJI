@@ -24,7 +24,6 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addStyleEntry('login', './assets/styles/login.scss')
-
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
@@ -71,7 +70,7 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 
     .addPlugin(new WatchExternalFilesPlugin({
         files: [

@@ -7,7 +7,7 @@
     {% for content in contents %}
         <div>
             <h2>{{ content.name }}</h2>
-            <p>{{ content.description }}</p>
+            <p>{{ content.description | raw }}</p>
             <ul>
                 {% for tag in content.tags %}
                     <li>{{ tag.name }}</li>
