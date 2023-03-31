@@ -1,0 +1,10 @@
+<h1>Etape 1</h1>
+<h2>Profession</h2>
+
+<h3>Sélectionnez votre profession</h3>
+
+{{ form_start(form) }}
+    {{ form_widget(form.job) }}
+    {{ form_rest(form) }}
+    <button type="submit" name="next" value="step2">Suivant</button>
+{{ form_end(form) }}

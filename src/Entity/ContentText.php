@@ -22,11 +22,6 @@ class ContentText
     #[ORM\ManyToOne(inversedBy: 'contentTexts')]
     private ?Content $content = null;
 
-
-    public function __construct()
-    {
-    }
-
     public function getId(): ?int
     {
         return $this->id;
