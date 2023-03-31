@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<title>{{ content.name }}</title>
+
+{% block body %}
+    <h1>{{ content.name }}</h1>
+    {% for image in content.media %}
+        <img src="{{ image.filename }}" alt="{{ image.filename }}" />
+    {% endfor %}
+    <h2>Description</h2>
+    <p>{{ content.description }}</p>
+    <h2>Contenu</h2>
+    {% for text in content.contentTexts %}
+        <p>{{ text.text }}</p>
+    {% endfor %}
+    <ul>
+    {% for tag in content.tags %}
+        <li>{{ tag.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

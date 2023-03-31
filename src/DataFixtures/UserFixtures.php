@@ -40,6 +40,8 @@ class UserFixtures extends Fixture
                 ->setRoles([])
                 ->setPassword($pwd);
             $manager->persist($object);
+
+            $this->addReference('user_' . $i, $object);
         }
 
         $manager->flush();
