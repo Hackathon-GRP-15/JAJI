@@ -21,6 +21,7 @@ module.exports = {
       'roseComponent': '#fceeec',
       'redComponent': '#d35458',
       'blueText': '#1E2F42',
+      'navGrey': '#F5F6F7'
 
     },
   },

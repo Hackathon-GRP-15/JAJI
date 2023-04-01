@@ -26,11 +26,11 @@ class FormGuide1Type extends AbstractType
                     'Développeur web' => 'developer',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input',
+                    'class' => 'block text-sm font-medium px-6 py-10 bg-white grid grid-col-4 ',
 
                 ],
-            ])
-        ;
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
