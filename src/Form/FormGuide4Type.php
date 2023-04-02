@@ -18,14 +18,14 @@ class FormGuide4Type extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
                 'choices' => [
+                    'Selectionnez une option' => '',
                     'Oui' => 'yes',
                     'Non' => 'no',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input',
+                    'class' => 'block mb-2 text-sm py-4 font-medium w-full text-gray-900 dark:text-white',
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
