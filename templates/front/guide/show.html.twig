@@ -8,10 +8,10 @@
         <img src="{{ image.filename }}" alt="{{ image.filename }}" />
     {% endfor %}
     <h2>Description</h2>
-    <p>{{ content.description }}</p>
+    <p>{{ content.description | raw }}</p>
     <h2>Contenu</h2>
     {% for text in content.contentTexts %}
-        <p>{{ text.text }}</p>
+        <p>{{ text.text | raw }}</p>
     {% endfor %}
     <ul>
     {% for tag in content.tags %}
