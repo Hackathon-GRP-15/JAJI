@@ -15,14 +15,15 @@ class FormGuide5Type extends AbstractType
             ->add('isDiet', ChoiceType::class, [
                 'label' => 'Régime alimentaire',
                 'mapped' => false,
-                'expanded' => true,
+                'expanded' => false,
                 'multiple' => false,
                 'choices' => [
+                    'Selectionnez une option' => '',
                     'Oui' => 'yes',
                     'Non' => 'no',
                 ],
                 'attr' => [
-                    'class' => 'form-check-input',
+                    'class' => 'block mb-2 text-sm mt-2 py-4 font-medium w-full text-gray-900 dark:text-white',
                 ],
             ])
             ->add(
@@ -56,7 +57,10 @@ class FormGuide5Type extends AbstractType
                         'Sans produits nocifs' => 'harmful-free',
                         'Sans produits dangereux' => 'dangerous-free',
                         'Sans produits polluants' => 'polluting-free'
-                    ]
+                    ],
+                    'attr' => [
+                        'class' => 'bg-white py-10 ',
+                    ],
                 ]
             );
     }
