@@ -40,7 +40,7 @@ class ContentTypeRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ContentType[] Returns an array of ContentType objects
+//     * @return ContentFormType[] Returns an array of ContentFormType objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ContentTypeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ContentType
+//    public function findOneBySomeField($value): ?ContentFormType
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')
