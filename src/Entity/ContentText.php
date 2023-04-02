@@ -22,6 +22,9 @@ class ContentText
     #[ORM\ManyToOne(inversedBy: 'contentTexts')]
     private ?Content $content = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $position = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -47,6 +50,18 @@ class ContentText
     public function setContent(?Content $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
