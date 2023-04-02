@@ -20,8 +20,7 @@ class UserFixtures extends Fixture
             ->setEmail('admin@user.fr')
             ->setUsername('admin')
             ->setRoles(['ROLE_ADMIN'])
-            ->setPassword($pwd)
-        ;
+            ->setPassword($pwd);
 
         $manager->persist($object);
 
@@ -29,18 +28,17 @@ class UserFixtures extends Fixture
             ->setEmail('user@user.fr')
             ->setUsername('user')
             ->setRoles([])
-            ->setPassword($pwd)
-        ;
+            ->setPassword($pwd);
 
         $manager->persist($object);
 
-        for ($i=0; $i < 50; $i++) {
+
+        for ($i = 0; $i < 50; $i++) {
             $object = (new User())
                 ->setEmail('user' . $i . '@user.fr')
                 ->setUsername($faker->userName)
                 ->setRoles([])
-                ->setPassword($pwd)
-            ;
+                ->setPassword($pwd);
             $manager->persist($object);
 
             $this->addReference('user_' . $i, $object);
