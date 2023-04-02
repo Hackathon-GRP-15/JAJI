@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\ContentType;
+use App\Entity\ContentText;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<ContentType>
+ * @extends ServiceEntityRepository<ContentText>
  *
- * @method ContentType|null find($id, $lockMode = null, $lockVersion = null)
- * @method ContentType|null findOneBy(array $criteria, array $orderBy = null)
- * @method ContentType[]    findAll()
- * @method ContentType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method ContentText|null find($id, $lockMode = null, $lockVersion = null)
+ * @method ContentText|null findOneBy(array $criteria, array $orderBy = null)
+ * @method ContentText[]    findAll()
+ * @method ContentText[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ContentTypeRepository extends ServiceEntityRepository
+class ContentTextRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ContentType::class);
+        parent::__construct($registry, ContentText::class);
     }
 
-    public function save(ContentType $entity, bool $flush = false): void
+    public function save(ContentText $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class ContentTypeRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(ContentType $entity, bool $flush = false): void
+    public function remove(ContentText $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class ContentTypeRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return ContentFormType[] Returns an array of ContentFormType objects
+//     * @return ContentText[] Returns an array of ContentText objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class ContentTypeRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?ContentFormType
+//    public function findOneBySomeField($value): ?ContentText
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

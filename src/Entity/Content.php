@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ContentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Slug;
+use App\Repository\ContentRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: ContentRepository::class)]
 class Content
@@ -28,9 +29,21 @@ class Content
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'content')]
     private Collection $tags;
 
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: Media::class)]
+    private Collection $media;
+
+    #[ORM\OneToMany(mappedBy: 'content', targetEntity: ContentText::class)]
+    private Collection $contentTexts;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Slug(fields: ['name'])]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->media = new ArrayCollection();
+        $this->contentTexts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +110,78 @@ class Content
         if ($this->tags->removeElement($tag)) {
             $tag->removeContent($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedia(Media $media): self
+    {
+        if (!$this->media->contains($media)) {
+            $this->media->add($media);
+            $media->setContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedia(Media $media): self
+    {
+        if ($this->media->removeElement($media)) {
+            // set the owning side to null (unless already changed)
+            if ($media->getContent() === $this) {
+                $media->setContent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContentText>
+     */
+    public function getContentTexts(): Collection
+    {
+        return $this->contentTexts;
+    }
+
+    public function addContentText(ContentText $contentText): self
+    {
+        if (!$this->contentTexts->contains($contentText)) {
+            $this->contentTexts->add($contentText);
+            $contentText->setContent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContentText(ContentText $contentText): self
+    {
+        if ($this->contentTexts->removeElement($contentText)) {
+            // set the owning side to null (unless already changed)
+            if ($contentText->getContent() === $this) {
+                $contentText->setContent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

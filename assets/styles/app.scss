@@ -7,3 +7,16 @@ $yellow : #fdfd6a;
 body {
 
 }
+.select-wrapper {
+  max-height: 200px; /* set the maximum height of the dropdown menu */
+  overflow-y: auto; /* enable vertical scrolling when the content exceeds the maximum height */
+}
+
+.select-wrapper select {
+  width: 100%; /* set the width of the select input to fill its container */
+  padding: 8px; /* add some padding to the select input */
+  font-size: 16px; /* set the font size of the select input */
+  border: 1px solid #ccc; /* add a border to the select input */
+  border-radius: 4px; /* round the corners of the select input */
+  background-color: #fff; /* set the background color of the select input */
+}

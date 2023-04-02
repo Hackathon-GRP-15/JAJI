@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<title>Nos recommendations</title>
+
+{% block body %}
+    <h1>Nos recommendations</h1>
+    {% for content in contents %}
+        <div>
+            <h2>{{ content.name }}</h2>
+            <p>{{ content.description | raw }}</p>
+            <ul>
+                {% for tag in content.tags %}
+                    <li>{{ tag.name }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('front_guide_show', {'slug': content.slug}) }}">Voir</a>
+        </div>
+    {% endfor %}
+{% endblock %}
