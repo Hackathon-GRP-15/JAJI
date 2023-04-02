@@ -1,0 +1,76 @@
+{% extends 'base_front.html.twig' %}
+{% block body %}
+	{# Etape 2 #}
+
+
+<h2 class="font-semibold text-center mt-4 leading-7 text-3xl">Votre temps d'écran par jour</h2>
+<h4 class="font-semibold mt-4 p-4 leading-7 text-xl">Sélectionnez votre temps d'écran par jour.</h4>
+{# <h3>Sélectionnez votre temps d'écran par jour</h3> #}
+
+<div class="container max-w-full mx-auto text-center flex flex-row gap-3 px-6 py-10 ">
+    {{ form_start(form) }}
+        {{ form_widget(form.screenTime) }}
+        <span id="range-value" >{{ form.screenTime.vars.value }}</span>
+        {{ form_rest(form) }}
+        <button class="mr-2 inline-flex justify-center rounded-md border border-transparent bg-redComponent  font-medium text-white text-xs " type="submit" name="next" value="step3">Suivant</button>
+    {{ form_end(form) }}  
+
+
+    <div class="float-right ... block bg-white text-sm border border-redComponent shadow hover:bg-gray-100 " style="margin-left: 650px; margin-top: 25px;">
+
+			<h2 class="font-semibold text-center mt-4 leading-7 ">Vos Étapes</h4>
+
+			<h4 class="p-4 ">Sélectionnez l'étape sur laquelle vous souhaitez revenir</h4>
+
+			<ol class=" relative text-gray-500 border-gray-200 py-5">
+				<li class="ml-2 py-2">
+					<span class="absolute bg-redComponent flex items-center justify-center w-4 h-4 bg-green-200 rounded-full  ring-4 ring-white dark:ring-gray-900 dark:bg-green-900"></span>
+					<a href="">
+						<h3 class="font-medium leading-tight">Profession</h3>
+					</a>
+				</li>
+				<li class="ml-2 py-2">
+					<span class="absolute flex items-center justify-center bg-redComponent w-4 h-4  bg-gray-100 rounded-full  ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"></span>
+					<a href="">
+						<h3 class="font-medium leading-tight">Temps d'écran</h3>
+					</a>
+				</li>
+				<li class="ml-2 py-2">
+					<span class="absolute flex items-center justify-center bg-navGrey w-4 h-4 rounded-full ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"></span>
+					<a href="">
+						<h3 class="font-medium leading-tight">Sport</h3>
+					</a>
+				</li>
+				<li class="ml-2 py-2">
+					<span class="absolute flex items-center justify-center w-4 h-4 bg-navGrey bg-gray-100 rounded-full  ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"></span>
+					<a href="">
+						<h3 class="font-medium leading-tight">Concentration</h3>
+					</a>
+				</li>
+
+				<li class="ml-2 py-2">
+					<span class="absolute flex items-center justify-center w-4 h-4 bg-navGrey rounded-full ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700"></span>
+					<a href="">
+						<h3 class="font-medium leading-tight">Nutrition</h3>
+					</a>
+				</li>
+			</ol>
+
+		</div>
+    
+
+{% endblock %}
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var rangeInput = document.querySelector('input[type="range"]');
+    var rangeValue = document.querySelector('#range-value');
+
+    rangeInput.addEventListener('input', function() {
+        var value = rangeInput.value;
+        rangeValue.textContent = value;
+    });
+    });
+</script>
+
+{% endblock %}
