@@ -17,6 +17,7 @@ class FormGuide2Type extends AbstractType
                 'mapped' => false,
                 'attr' => [
                     'class' => 'form-range',
+                    'color' => 'bg-redComponent',
                     'min' => 0,
                     'max' => 10,
                 ],
