@@ -39,10 +39,9 @@ class FormGuide3Type extends AbstractType
                     'Autre' => 'other',
                 ],
                 'attr' => [
-                    'class' => 'form-select',
+                    'class' => 'container bg-white ',
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
