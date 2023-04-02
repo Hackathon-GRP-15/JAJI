@@ -1,0 +1,19 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Liste des contenus{% endblock %}
+
+{% block body %}
+    <h1>Liste des contenus</h1>
+    {% for content in contents %}
+        <div>
+            <h2>{{ content.name }}</h2>
+            <p>{{ content.description | raw }}</p>
+            <ul>
+                {% for tag in content.tags %}
+                    <li>{{ tag.name }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('back_content_show', {'slug': content.slug}) }}">Voir</a>
+        </div>
+    {% endfor %}
+{% endblock %}

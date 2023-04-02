@@ -1,0 +1,105 @@
+<head>
+	<meta charset="UTF-8">
+	<title>
+		{% block title %}Welcome!
+		{% endblock %}
+	</title>
+	<link
+	rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+	{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+	{% block stylesheets %}
+		{{ encore_entry_link_tags('app') }}
+	{% endblock %}
+
+	{% block javascripts %}
+		{{ encore_entry_script_tags('app') }}
+	{% endblock %}
+</head>
+<body>
+	<nav class=" border-gray-300 bg-navGrey">
+		<div class="mx-auto flex w-11/12 max-w-[1400px] items-center justify-between py-4">
+			<a href="{{ path('app_login') }}" class="text-xl font-bold">
+				<img src="{{ asset('images/logo-jaji.png') }}" alt="Doctors" width="80" height="80"/>
+			</a>
+			<div class="flex items-center">
+				{% if app.user %}
+					<a href="#" class="relative inline-flex items-center rounded-l-md mr-2 px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+						<span class="sr-only">Previous</span>
+						<svg class="h-5 w-5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd"/>
+						</svg>
+					</a>
+					<a href="#" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+						<span class="sr-only">Next</span>
+						<svg class="h-5 w-5" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
+							<path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"/>
+						</svg>
+					</a>
+				{% endif %}
+			</div>
+		</div>
+
+	</nav>
+
+	<h2 class="font-semibold text-center mt-4 leading-7 text-3xl">Profession</h4>
+
+	<h4 class="font-semibold mt-4 p-4 leading-7 text-xl">Sélectionnez votre secteur d'activité</h4>
+
+	<div class="container max-w-full mx-auto text-center flex flex-row gap-3 px-6 py-10 ">
+
+		<a href="#" class="block p-6 h-48 bg-white text-sm shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+			<p class="font-normal text-gray-700 dark:text-gray-400"><img src="{{ asset('images/logo-main.png') }}" alt="logo-main" width="50" height="50" class="mx-auto"/>Entreprise de publicité et assimilées</p>
+		</a>
+		<a href="#" class="block h-48 p-6 bg-white text-sm shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+			<p class="font-normal text-gray-700 dark:text-gray-400"><img src="{{ asset('images/logo-main.png') }}" alt="logo-main" width="50" height="50" class="mx-auto"/>Bureau d’études techniques et des sociétés de conseils (SUNTEC)
+			</p>
+		</a>
+		<a href="#" class="block h-48 p-6 bg-white text-sm shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+			<p class="font-normal text-gray-700 dark:text-gray-400">
+				<img src="{{ asset('images/logo-main.png') }}" alt="logo-main" width="50" height="50" class="mx-auto"/>
+				Cabinets d’experts comptables et de commissaires aux comptes</p>
+		</a>
+
+		<div class="max-w-xl text-center flex flex-row gap-3 px-4 ">
+			{{ form_start(form) }}<fieldset>
+				<legend class="text-sm font-semibold leading-6 text-gray-900">Mes étapes</legend>
+				<p class="mt-1 text-sm leading-6 text-gray-600">Sélectionnez l’étape sur laquelle vous souhaitez revenir
+				</p>
+
+				<div class="">
+					{{ form_widget(form.job) }}
+					{{ form_rest(form) }}</div>
+			</fieldset>
+			<button type="submit" class="mr-2 inline-flex justify-center rounded-md border border-indigo-600 bg-blueText py-2 px-4 text-sm font-medium text-white" name="next" value="step2">Suivant</button>
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+
+
+	<footer class="flex flex-col items-center gap-2 border-gray-300 bg-roseComponent py-10">
+		<a href="{{ path('app_login') }}" class="text-2xl font-bold">
+			<span class="text-indigo-600">Ja</span>ji.
+		</a>
+		<nav class="flex flex-wrap items-center justify-center gap-4 text-indigo-600 md:gap-6">
+			<a href="" class="whitespace-nowrap hover:underline">
+				À propos
+			</a>
+			<a href="" class="whitespace-nowrap hover:underline">
+				Centre d'aide
+			</a>
+			<a href="" class="whitespace-nowrap hover:underline">
+				Politique de confidentialité
+			</a>
+			<a href="" class="whitespace-nowrap hover:underline">
+				Conditions d'utilisation
+			</a>
+		</nav>
+		<p class="text-sm text-gray-600">
+			&copy; Jaji. All rights reserved.
+		</p>
+	</footer>
+
+
+</body>
